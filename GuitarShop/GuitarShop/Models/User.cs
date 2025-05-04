@@ -1,9 +1,13 @@
-﻿namespace GuitarShop.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace GuitarShop.Models;
+
+public partial class User
 {
-    public class User
-    {
-        public int Id { get; set; } // Primary key
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Username { get; set; } = null!;
+
+    public string PasswordHash { get; set; } = null!;
 }
