@@ -1,65 +1,123 @@
 ﻿@model IEnumerable<GuitarShop.Models.Guitar>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Guitar Collection";
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5">@ViewData["Title"]</h1>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Create New
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Availability)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Interest)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Body)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Availability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Interest)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Name">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Name">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Name">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <table class="table table-hover table-bordered shadow-sm rounded">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Type)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Body)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Brand)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Availability)</th>
+                <th style="width: 150px">@Html.DisplayNameFor(model => model.First().Interest)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="hover-target" data-display-image = "@item.Name">
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)$</td>
+                    <td>@Html.DisplayFor(modelItem => item.Availability)</td>
+                    <td>
+                        @{
+                            var interest = item.Interest * 10; // * 10 za da raboti kato %
+                            var percentage = Math.Clamp(interest, 0, 100);
+                            
+                            var red = (int)(255 * (percentage / 100.0));
+                            var green = (int)(255 * (1 - (percentage / 100.0)));
+                            var barColor = $"rgb({red},{green},0)";
+
+                            var display = interest == 10 ? "-" : $"{interest}%";
+                        }
+                        <div class="progress" style="height: 30px;">
+                            <div class="progress-bar" role="progressbar" style="width: @percentage%; background-color: @barColor;">
+                                @display
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Name" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Name" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-info-circle"></i> Details
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Name" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<style>
+    .hover-image {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        max-width: 150px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    tr.hover-target:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+</style>
+
+<img id="hoverImage" alt="goo goo gaga ne raboti" class="hover-image"/>
+
+<script>
+    const hoverImage = document.getElementById("hoverImage");
+    document.querySelectorAll("tr.hover-target").forEach(row => {
+
+        row.addEventListener("mousemove", e => {
+            const guitar = row.getAttribute("data-display-image"); // izpolzva Guitar.Name
+
+            if (guitar == "C40")
+            {
+                hoverImage.src = "https://media.discordapp.net/attachments/908707119488962591/1369389613155880980/misho.jpg?ex=681baef5&is=681a5d75&hm=0e5d7a284e1861419a9d70d4f2e49d2547a6507f207a6a05b463ebce0ed603fb&=&format=webp&width=488&height=575";
+            }
+            else
+            {
+                hoverImage.src = "https://media.discordapp.net/attachments/908707119488962591/1369391266885926942/miro_kavrukov.jpg?ex=681bb080&is=681a5f00&hm=2f65accef72ea8185f78a0c3c4b5eebd76e22c0b0cc73e06b80cdbd166d3ff55&=&format=webp&width=259&height=575";
+            }
+            
+            hoverImage.style.display = "block";
+            hoverImage.style.top = `${e.clientY + 15}px`;
+            hoverImage.style.left = `${e.clientX + 15}px`;
+        });
+
+        row.addEventListener("mouseleave", () => {
+            hoverImage.style.display = "none";
+        });
+
+    });
+</script>
