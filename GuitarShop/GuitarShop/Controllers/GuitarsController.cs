@@ -20,9 +20,24 @@ namespace GuitarShop.Controllers
         }
 
         // GET: Guitars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Guitar.ToListAsync());
+            // search funkcionalnost, tursi suputstvie v name, brand i type
+
+            var guitars = from g in _context.Guitar
+                          select g;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                guitars = guitars.Where(s => 
+                s.Name.Contains(searchString) ||
+                s.Brand.Contains(searchString) ||
+                s.Type.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(await guitars.ToListAsync());
         }
 
         // GET: Guitars/Details/5
