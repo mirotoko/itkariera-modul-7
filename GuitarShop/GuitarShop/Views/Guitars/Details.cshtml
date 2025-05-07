@@ -4,51 +4,132 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Name)</h1>
+<h2>
+    <img class="guitar-image" src="https://media.discordapp.net/attachments/632970971699085323/1369780554165260388/tedo.jpg?ex=681d1b0d&is=681bc98d&hm=e329b89cfff6692b9ce241b8d008fc7bf6e6db05c9682a07aeb35bd9912ff7c6&=&format=webp&width=431&height=575">
+</h2>
+
+
+<style>
+    .guitar-image {
+        height: 300px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<table class="table table-bordered table-striped">
+    <tbody>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Type)</td>
+            <td>@Html.DisplayFor(model => model.Type)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Body)</td>
+            <td>@Html.DisplayFor(model => model.Body)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Brand)</td>
+            <td>@Html.DisplayFor(model => model.Brand)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Price)</td>
+            <td>@Html.DisplayFor(model => model.Price)$</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Availability)</td>
+            <td>@Html.DisplayFor(model => model.Availability)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Interest)</td>
+            <td>
+                @{
+                    var interest = Model.Interest * 10; // * 10 za da raboti kato procent
+                    var percentage = Math.Clamp(interest, 0, 100);
+
+                    var red = (int)(255 * (percentage / 100.0));
+                    var green = (int)(255 * (1 - (percentage / 100.0)));
+                    var barColor = $"rgb({red},{green},0)";
+
+                    var display = interest == 10 ? "-" : $"{interest}%";
+                }
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar" role="progressbar" style="width: @percentage%; background-color: @barColor;">
+                        @display
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <div>
-    <h4>Guitar</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Body)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Availability)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Interest)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Interest)
-        </dd>
-    </dl>
+    <a class="btn btn-success" id="placeOrderButton">Place Order</a>
+
+    <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+    @if (Model.Name == "C40")
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Name" class="btn btn-outline-secondary">Edit</a>
+    }
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Name">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div id="cartOverlay" style="display: none;">
+    <div id="cart">
+        <h4>Add to Cart</h4>
+
+        <label for="cartAmount">Amount:</label>
+        <input type="number" id="cartAmount" min="1" max="@Model?.Availability" value="1" style="margin-bottom: 1rem;">
+
+        <div style="display: flex; justify-content: space-between; gap: 1rem;">
+            <button class="btn btn-success" id="addToCartButton">Add to Cart</button>
+            <button class="btn btn-outline-secondary" id="closeCartButton">Back</button>
+        </div>
+    </div>
 </div>
+
+<style>
+    #cartOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    #cart {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        min-width: 300px;
+        text-align: center;
+    }
+
+    #cartButton input[type="number"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+    }
+</style>
+
+<script>
+    const cartAmount = document.getElementById('cartAmount');
+    const overlay = document.getElementById('cartOverlay');
+    const openButton = document.getElementById('placeOrderButton');
+    const closeButton = document.getElementById('closeCartButton');
+
+    openButton.addEventListener('click', e => {
+        cartAmount.value='1';
+        overlay.style.display = 'flex';
+    });
+
+    closeButton.addEventListener('click', e => {
+        overlay.style.display = 'none';
+    });
+</script>
