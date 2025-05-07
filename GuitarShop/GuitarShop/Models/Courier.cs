@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//s koi akaunt pushvam?
+using System.ComponentModel.DataAnnotations;
 
 namespace GuitarShop.Models
 {
