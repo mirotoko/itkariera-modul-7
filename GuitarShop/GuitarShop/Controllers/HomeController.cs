@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using GuitarShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuitarShop.Controllers
@@ -17,7 +18,7 @@ namespace GuitarShop.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
