@@ -14,17 +14,42 @@ namespace GuitarShop
             builder.Services.AddDbContext<GuitarShopContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("GuitarShopContext") ?? throw new InvalidOperationException("Connection string 'GuitarShopContext' not found.")));
 
-            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddIdentity<Users, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            
 
             
+    //        builder.Services.AddIdentity<Users, IdentityRole>()
+    //.AddEntityFrameworkStores<ApplicationDbContext>()
+    //.AddDefaultTokenProviders();
 
 
             var app = builder.Build();
