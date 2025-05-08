@@ -52,7 +52,7 @@
                     var green = (int)(255 * (1 - (percentage / 100.0)));
                     var barColor = $"rgb({red},{green},0)";
 
-                    var display = interest == 10 ? "-" : $"{interest}%";
+                    var display = $"{interest}%";
                 }
                 <div class="progress" style="height: 25px;">
                     <div class="progress-bar" role="progressbar" style="width: @percentage%; background-color: @barColor;">
@@ -78,7 +78,7 @@
     <div id="cart">
         <h4>Add to Cart</h4>
 
-        <label for="cartAmount">Amount:</label>
+        <label for="cartAmount" id="cartAmountText">Amount:</label>
         <input type="number" id="cartAmount" min="1" max="@Model?.Availability" value="1" style="margin-bottom: 1rem;">
 
         <div style="display: flex; justify-content: space-between; gap: 1rem;">
@@ -88,8 +88,32 @@
     </div>
 </div>
 
+<div id="cartOverlaySuccess" style="display: none;">
+    <div id="cartSuccess">
+        <h4 >Added to cart!</h4>
+
+        <div style="display: flex; justify-content: space-between; gap: 1rem;">
+            <button class="btn btn-success" id="goToCartButton">Go to cart</button>
+            <button class="btn btn-outline-secondary" id="closeCartButtonSuccess">Back</button>
+        </div>
+    </div>
+</div>
+
 <style>
     #cartOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    #cartOverlaySuccess {
         position: fixed;
         top: 0;
         left: 0;
@@ -111,6 +135,15 @@
         text-align: center;
     }
 
+    #cartSuccess {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        min-width: 300px;
+        text-align: center;
+    }
+
     #cartButton input[type="number"] {
         width: 100%;
         padding: 0.5rem;
@@ -120,16 +153,40 @@
 
 <script>
     const cartAmount = document.getElementById('cartAmount');
+
     const overlay = document.getElementById('cartOverlay');
+    const overlaySuccess = document.getElementById('cartOverlaySuccess');
+
     const openButton = document.getElementById('placeOrderButton');
+    const goToCartButton = document.getElementById('goToCartButton');
+
     const closeButton = document.getElementById('closeCartButton');
+    const closeButtonSuccess = document.getElementById('closeCartButtonSuccess');
+
+    const addToCartButton = document.getElementById('addToCartButton');
 
     openButton.addEventListener('click', e => {
         cartAmount.value='1';
         overlay.style.display = 'flex';
+        overlaySuccess.style.display = 'none';
     });
 
     closeButton.addEventListener('click', e => {
         overlay.style.display = 'none';
+        overlaySuccess.style.display = 'none';
+    });
+
+    closeButtonSuccess.addEventListener('click', e => {
+        overlay.style.display = 'none';
+        overlaySuccess.style.display = 'none';
+    });
+
+    addToCartButton.addEventListener('click', e => {
+        overlay.style.display = 'none';
+        overlaySuccess.style.display = 'flex';
+    });
+
+    goToCartButton.addEventListener('click', e => {
+        window.location.href = `/Guitars/Edit/@Model?.Name`;
     });
 </script>

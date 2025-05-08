@@ -7,7 +7,7 @@
 }
 
 <div class="account-container">
-    <div class="account-box">
+    <div class="account-box" id="accountBox">
         <h2 class="text-center mb-4">Verify Email</h2>
         <form asp-action="VerifyEmail" method="post">
             @Html.AntiForgeryToken()
@@ -24,6 +24,23 @@
         </form>
     </div>
 </div>
+
+<style>
+    #accountBox {
+        opacity: 0.95;
+    }
+</style>
+
+<script>
+    const accountBox = document.getElementById('accountBox');
+
+    accountBox.addEventListener('mouseenter', e => {
+        accountBox.style.opacity = '1';
+    });
+    accountBox.addEventListener('mouseleave', e => {
+        accountBox.style.opacity = '0.95';
+    });
+</script>
 
 @section Scripts {
     @{
