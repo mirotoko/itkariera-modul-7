@@ -60,4 +60,9 @@
         accountBox.style.opacity = '0.95';
     });
 </script>
-    @{        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");    }}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
