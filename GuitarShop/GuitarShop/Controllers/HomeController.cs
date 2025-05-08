@@ -2,20 +2,27 @@ using System.Diagnostics;
 using GuitarShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using GuitarShop.Data;
 
 namespace GuitarShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly GuitarShopContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(GuitarShopContext context)
         {
-            _logger = logger;
+            _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var bodyTypes = _context.Guitar
+            .Select(g => g.Body)
+            .Distinct()
+            .ToList();
+
+            return View(bodyTypes.ToList());
         }
         public IActionResult Privacy()
         {

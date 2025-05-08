@@ -30,6 +30,7 @@ namespace GuitarShop.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 guitars = guitars.Where(s => 
+                s.Body.Contains(searchString) ||
                 s.Name.Contains(searchString) ||
                 s.Brand.Contains(searchString) ||
                 s.Type.Contains(searchString));

@@ -1,8 +1,53 @@
-﻿@{
+﻿@model List<string>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">lek kitarski magazin</h1>
 </div>
+
+
+<div class="container mt-5">
+    <h1 class="mb-4">Choose Guitar Body Type</h1>
+    <div class="row g-4">
+        @foreach (var body in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 rounded-4 p-3 card-body hover-target">
+                    <h5 class="card-title" id="cardTitle" data-body="@body">@body</h5>
+                    <p class="card-text text-muted">View all @body guitars</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .hover-target {
+        transition: background-color 0.3s ease;
+    }
+
+    .hover-target:hover {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.querySelectorAll(".hover-target").forEach(card => {
+        card.addEventListener('mousemove', e => {
+            card.style.backgroundColor = '#eee'
+        });
+        card.addEventListener('mouseleave', e => {
+            card.style.backgroundColor = '#fff'
+        });
+
+        card.addEventListener("click", e => {
+            const titleElement = card.querySelector(".card-title");
+            const bodyType = titleElement.dataset.body;
+
+            window.location.href = `/Guitars?searchString=${encodeURIComponent(bodyType)}`;
+        });
+    });
+</script>
