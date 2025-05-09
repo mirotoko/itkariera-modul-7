@@ -17,9 +17,8 @@ namespace GuitarShop.Models
 );*/
         [Key]
         public int Id { get; set; }
-        public string UserID { get; set; }
+        public Users UserID { get; set; }
         public Guitar Guitar { get; set; } = null!;
-        public Shop Shop { get; set; } = null!;
         public int Quantity { get; set; }
     }
 }
