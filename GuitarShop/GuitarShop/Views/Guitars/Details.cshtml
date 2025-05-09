@@ -13,16 +13,16 @@
 
 <style>
     .guitar-image {
-        margin-left: 500px;
-        margin-top: -200px;
-        margin-bottom: -200px;
-        transform: rotate(90deg);
-        height: 700px;
-        z-index: -1000;
-        
-        /* border: 2px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
+    margin-left: 500px;
+    margin-top: -200px;
+    margin-bottom: -200px;
+    transform: rotate(90deg);
+    height: 700px;
+    z-index: -1000;
+
+    /* border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
     }
 </style>
 
@@ -44,7 +44,7 @@
             <td>@Html.DisplayNameFor(model => model.Price)</td>
             <td>@Html.DisplayFor(model => model.Price)$</td>
         </tr>
-        <tr>
+        <tr id="availabilityRow">
             <td>@Html.DisplayNameFor(model => model.Availability)</td>
             <td>@Html.DisplayFor(model => model.Availability)</td>
         </tr>
@@ -72,14 +72,54 @@
 </table>
 
 <div>
-    <a class="btn btn-success" id="placeOrderButton">Place Order</a>
-
+    @{
+        if (Model.Availability == 0)
+        {
+            <a class="btn btn-outline-secondary" id="placeOrderButtonNotAvailable">Place Order</a>
+        }
+        else
+        {
+            <a class="btn btn-success" id="placeOrderButton">Place Order</a>
+        }
+    }
+    
     <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+
     @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" asp-route-id="@Model?.Name" class="btn btn-outline-secondary">Edit</a>
     }
 </div>
+
+<style>
+    #availabilityRow{
+        transition: background-color 0.5s ease, transform 0.5s ease-out;
+    }
+</style>
+
+<script>
+    const greyButton = document.getElementById("placeOrderButtonNotAvailable");
+    const availabilityRow = document.getElementById("availabilityRow");
+
+    greyButton.addEventListener('click', e => {
+        availabilityRow.style.backgroundColor = `rgb(255,150,150)`;
+        availabilityRow.style.transform = `translateX(-2px)`;
+
+        setTimeout(() => {
+            availabilityRow.style.backgroundColor = '#fff';
+        }, 300);
+
+        setTimeout(() => {
+            availabilityRow.style.transform = `translateX(2px)`;
+        }, 300);
+
+        setTimeout(() => {
+            availabilityRow.style.transform = `translateX(0px)`;
+        }, 600);
+
+        
+    });
+</script>
 
 <div id="cartOverlay" style="display: none;">
     <div id="cart">
