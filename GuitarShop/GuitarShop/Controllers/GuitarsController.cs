@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuitarShop.Data;
 using GuitarShop.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace GuitarShop.Controllers
 {
     public class GuitarsController : Controller
     {
         private readonly GuitarShopContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public GuitarsController(GuitarShopContext context)
+        public GuitarsController(GuitarShopContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Guitars
@@ -168,6 +171,23 @@ namespace GuitarShop.Controllers
         private bool GuitarExists(string id)
         {
             return _context.Guitar.Any(e => e.Name == id);
+        }
+
+        public async Task<IActionResult> AddToCart(string guitarName)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            /*for (int i = 0; i < count; i++)
+            {
+                user.Cart.Add(guitarName);
+            }     */
+            
+            user.Cart.Add(guitarName);
+
+            await _userManager.UpdateAsync(user);
+
+            return NoContent();
+            //return View();
         }
     }
 }

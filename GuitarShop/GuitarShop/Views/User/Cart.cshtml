@@ -1,0 +1,15 @@
+﻿@model List<Guitar>
+
+@if (Model != null)
+{
+    <p>@Model.Count</p>
+    foreach (var guitar in Model)
+    {
+        <p>@guitar.Name</p>
+        <p>@guitar.Brand</p>
+    }
+}
+else
+{
+    <p>Your cart is empty.</p>
+}

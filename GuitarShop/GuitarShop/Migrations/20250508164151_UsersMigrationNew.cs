@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace GuitarShop.Data.Migrations
+namespace GuitarShop.Migrations
 {
     /// <inheritdoc />
-    public partial class CartMig : Migration
+    public partial class UsersMigrationNew : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -75,7 +75,7 @@
     @{
         if (Model.Availability == 0)
         {
-            <a class="btn btn-outline-secondary" id="placeOrderButtonNotAvailable">Place Order</a>
+            <a  class="btn btn-outline-secondary" id="placeOrderButtonNotAvailable">Place Order</a>
         }
         else
         {
@@ -125,11 +125,11 @@
     <div id="cart">
         <h4>Add to Cart</h4>
 
-        <label for="cartAmount" id="cartAmountText">Amount:</label>
-        <input type="number" id="cartAmount" min="1" max="@Model?.Availability" value="1" style="margin-bottom: 1rem;">
+        @* <label for="cartAmount" id="cartAmountText">Amount:</label> *@
+        @* <input type="number" id="cartAmount" min="1" max="@Model?.Availability" value="1" style="margin-bottom: 1rem;"> *@
 
         <div style="display: flex; justify-content: space-between; gap: 1rem;">
-            <button class="btn btn-success" id="addToCartButton">Add to Cart</button>
+            <a asp-action="AddToCart" asp-route-guitarName="@Model.Name" class="btn btn-success" id="addToCartButton">Add to Cart</a>
             <button class="btn btn-outline-secondary" id="closeCartButton">Back</button>
         </div>
     </div>
@@ -199,7 +199,7 @@
 </style>
 
 <script>
-    const cartAmount = document.getElementById('cartAmount');
+    //const cartAmount = document.getElementById('cartAmount');
 
     const overlay = document.getElementById('cartOverlay');
     const overlaySuccess = document.getElementById('cartOverlaySuccess');
@@ -213,7 +213,7 @@
     const addToCartButton = document.getElementById('addToCartButton');
 
     openButton.addEventListener('click', e => {
-        cartAmount.value='1';
+        //cartAmount.value='1';
         overlay.style.display = 'flex';
         overlaySuccess.style.display = 'none';
     });
@@ -229,11 +229,16 @@
     });
 
     addToCartButton.addEventListener('click', e => {
+        //const count = document.getElementById("cartAmount").value;
+        //const guitarName = "@Model.Name";
+        //fetch(`/AddToCart?guitarName=${encodeURIComponent(guitarName)}&count=${count}`);
+        // ne iskam da gledam tozi kod poveche NE mi se zanimava
+
         overlay.style.display = 'none';
         overlaySuccess.style.display = 'flex';
     });
 
     goToCartButton.addEventListener('click', e => {
-        window.location.href = `/Cart`;
+        window.location.href = `/User/Cart`;
     });
 </script>

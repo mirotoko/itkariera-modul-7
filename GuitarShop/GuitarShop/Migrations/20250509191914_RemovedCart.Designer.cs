@@ -4,6 +4,7 @@ using GuitarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuitarShop.Migrations
 {
     [DbContext(typeof(GuitarShopContext))]
-    partial class GuitarShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250509191914_RemovedCart")]
+    partial class RemovedCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +84,12 @@ namespace GuitarShop.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Name");
+
+                    b.HasIndex("UsersId");
 
                     b.ToTable("Guitar");
                 });
@@ -126,17 +134,13 @@ namespace GuitarShop.Migrations
                     b.ToTable("Shop");
                 });
 
-            modelBuilder.Entity("GuitarShop.Models.User", b =>
+            modelBuilder.Entity("GuitarShop.Models.Users", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Cart")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -183,7 +187,7 @@ namespace GuitarShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GuitarShop.Models.Courier", b =>
@@ -205,19 +209,31 @@ namespace GuitarShop.Migrations
                     b.Navigation("Shop");
                 });
 
+            modelBuilder.Entity("GuitarShop.Models.Guitar", b =>
+                {
+                    b.HasOne("GuitarShop.Models.Users", null)
+                        .WithMany("Cart")
+                        .HasForeignKey("UsersId");
+                });
+
             modelBuilder.Entity("GuitarShop.Models.Purchase", b =>
                 {
                     b.HasOne("GuitarShop.Models.Guitar", "Guitar")
                         .WithMany()
                         .HasForeignKey("GuitarName");
 
-                    b.HasOne("GuitarShop.Models.User", "UserID")
+                    b.HasOne("GuitarShop.Models.Users", "UserID")
                         .WithMany()
                         .HasForeignKey("UserIDId");
 
                     b.Navigation("Guitar");
 
                     b.Navigation("UserID");
+                });
+
+            modelBuilder.Entity("GuitarShop.Models.Users", b =>
+                {
+                    b.Navigation("Cart");
                 });
 #pragma warning restore 612, 618
         }

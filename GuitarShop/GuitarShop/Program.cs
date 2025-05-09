@@ -22,7 +22,7 @@ namespace GuitarShop
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentity<Users, IdentityRole>(options =>
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 8;
@@ -44,13 +44,14 @@ namespace GuitarShop
 
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            
 
-            
-    //        builder.Services.AddIdentity<Users, IdentityRole>()
-    //.AddEntityFrameworkStores<ApplicationDbContext>()
-    //.AddDefaultTokenProviders();
 
+
+            //        builder.Services.AddIdentity<Users, IdentityRole>()
+            //.AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultTokenProviders();
+
+            //  /\ BUGVA SAITA (NE ZNAM ZASHTO!)
 
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())

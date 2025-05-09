@@ -17,7 +17,7 @@ namespace GuitarShop.Services
             using var scope = serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<SeedService>>();
 
             try
@@ -36,7 +36,7 @@ namespace GuitarShop.Services
                 var adminEmail = "guitaradmin@guitarshop.com";
                 if (await userManager.FindByEmailAsync(adminEmail) == null)
                 {
-                    var adminUser = new Users
+                    var adminUser = new User
                     {
                         FullName = "Admin",
                         UserName = adminEmail,

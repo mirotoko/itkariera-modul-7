@@ -4,6 +4,7 @@ using GuitarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuitarShop.Migrations
 {
     [DbContext(typeof(GuitarShopContext))]
-    partial class GuitarShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250509194525_CartCreated")]
+    partial class CartCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +84,12 @@ namespace GuitarShop.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Name");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Guitar");
                 });
@@ -133,10 +141,6 @@ namespace GuitarShop.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Cart")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -205,6 +209,13 @@ namespace GuitarShop.Migrations
                     b.Navigation("Shop");
                 });
 
+            modelBuilder.Entity("GuitarShop.Models.Guitar", b =>
+                {
+                    b.HasOne("GuitarShop.Models.User", null)
+                        .WithMany("Cart")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("GuitarShop.Models.Purchase", b =>
                 {
                     b.HasOne("GuitarShop.Models.Guitar", "Guitar")
@@ -218,6 +229,11 @@ namespace GuitarShop.Migrations
                     b.Navigation("Guitar");
 
                     b.Navigation("UserID");
+                });
+
+            modelBuilder.Entity("GuitarShop.Models.User", b =>
+                {
+                    b.Navigation("Cart");
                 });
 #pragma warning restore 612, 618
         }
