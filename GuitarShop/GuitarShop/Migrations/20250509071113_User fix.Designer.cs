@@ -4,6 +4,7 @@ using GuitarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuitarShop.Migrations
 {
     [DbContext(typeof(GuitarShopContext))]
-    partial class GuitarShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250509071113_User fix")]
+    partial class Userfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,25 +24,6 @@ namespace GuitarShop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("GuitarShop.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("UserFullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserFullName");
-
-                    b.ToTable("Cart");
-                });
 
             modelBuilder.Entity("GuitarShop.Models.Courier", b =>
                 {
@@ -113,9 +97,6 @@ namespace GuitarShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("GuitarName")
                         .HasColumnType("nvarchar(450)");
 
@@ -131,8 +112,6 @@ namespace GuitarShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("GuitarName");
 
@@ -213,17 +192,6 @@ namespace GuitarShop.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GuitarShop.Models.Cart", b =>
-                {
-                    b.HasOne("GuitarShop.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserFullName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GuitarShop.Models.Courier", b =>
                 {
                     b.HasOne("GuitarShop.Models.Guitar", "Guitar")
@@ -245,10 +213,6 @@ namespace GuitarShop.Migrations
 
             modelBuilder.Entity("GuitarShop.Models.Purchase", b =>
                 {
-                    b.HasOne("GuitarShop.Models.Cart", null)
-                        .WithMany("Purchases")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("GuitarShop.Models.Guitar", "Guitar")
                         .WithMany()
                         .HasForeignKey("GuitarName");
@@ -270,11 +234,6 @@ namespace GuitarShop.Migrations
                     b.Navigation("Shop");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("GuitarShop.Models.Cart", b =>
-                {
-                    b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618
         }
