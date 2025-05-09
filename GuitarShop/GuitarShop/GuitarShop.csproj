@@ -9,7 +9,7 @@
 
  
   <ItemGroup>
-    <None Include="wwwroot\images\GuitarsPictures\Am Ultra II Strat HSS EB TXT.jpg" />
+	<None Include="wwwroot\images\GuitarsPictures\Am Ultra II Strat HSS EB TXT.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\C10.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\C7 CD Iberia.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\SG 1961 Les Paul SG Standard CH.jpg" />
