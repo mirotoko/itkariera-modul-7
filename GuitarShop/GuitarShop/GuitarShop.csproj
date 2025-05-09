@@ -7,6 +7,7 @@
     <UserSecretsId>aspnet-GuitarShop-4c477fd7-3829-45d1-a341-1a8ec34a1866</UserSecretsId>
   </PropertyGroup>
 
+ 
   <ItemGroup>
     <None Include="wwwroot\images\GuitarsPictures\Am Ultra II Strat HSS EB TXT.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\C10.jpg" />
@@ -18,7 +19,7 @@
     <None Include="wwwroot\images\GuitarsPictures\ES-335 Vintage Sunburst.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\Les Paul 59 Tobacco Burst VOS.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\Les Paul Classic Ebony.jpg" />
-    <None Include="wwwroot\images\GuitarsPictures\Les Paul FactoryBurst VOS.jpg" />
+    <None Include="wwwroot\images\GuitarsPictures\Les Paul 59 Factory Burst VOS.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\Les Paul Standard 50s HCS.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\Les Paul Standard 50s VSS.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\Les Paul Standard 60s Ebony.jpg" />
@@ -73,7 +74,6 @@
     <None Include="wwwroot\images\GuitarsPictures\JS32 Rhoads AH BK.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\JS32T Rhoads AH SBK.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\KVXMG King V Satin BK.jpg" />
-    <None Include="wwwroot\images\GuitarsPictures\Martin_D-300.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\CV 60s Custom Tele 3-SB.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\CV 60s Start CAR.jpg" />
     <None Include="wwwroot\images\GuitarsPictures\CV 70s Strat Black.jpg" />
@@ -94,10 +94,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\GuitarsPicturesPNGs\" />
   </ItemGroup>
 
 </Project>
