@@ -4,18 +4,22 @@
     ViewData["Title"] = "Details";
 }
 
+
+<div>
+    <img id="guitarImage" class="guitar-image" src="@($"/images/GuitarsPicturesPNGs/{Model.Name}.png")" alt="@Model.Name">
+</div>
 <h1>@Html.DisplayFor(model => model.Name)</h1>
-<h2>
-    <img class="guitar-image" src="https://media.discordapp.net/attachments/632970971699085323/1369780554165260388/tedo.jpg?ex=681d1b0d&is=681bc98d&hm=e329b89cfff6692b9ce241b8d008fc7bf6e6db05c9682a07aeb35bd9912ff7c6&=&format=webp&width=431&height=575">
-</h2>
 
 
 <style>
     .guitar-image {
-        height: 300px;
-        border: 2px solid #ccc;
+        margin-left: 50px;
+        transform: rotate(90deg);
+        height: 500px;
+        
+        /* border: 2px solid #ccc;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
     }
 </style>
 
