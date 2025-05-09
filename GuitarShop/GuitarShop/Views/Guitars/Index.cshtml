@@ -92,9 +92,6 @@
         pointer-events: none;
         z-index: 9999;
         max-width: 150px;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     tr.hover-target:hover {
@@ -103,7 +100,7 @@
     }
 </style>
 
-<img id="hoverImage" alt="goo goo gaga ne raboti" class="hover-image" />
+<img id="hoverImage" alt="TEDO OPRAVI GO!!!" class="hover-image" />
 
 <script>
     const inputBox = document.getElementById("inputBox");
@@ -119,8 +116,8 @@
 
         row.addEventListener("mousemove", e => {
             const guitar = row.getAttribute("data-display-image"); // izpolzva Guitar.Name
-
-            hoverImage.src='($"/images/GuitarsPictures/{$Model.Name}.jpg)'
+            
+            hoverImage.src=`/images/GuitarsPicturesPNGs/${guitar}.png`;
 
             hoverImage.style.display = "block";
             hoverImage.style.top = `${e.clientY + 15}px`;
