@@ -13,9 +13,12 @@
 
 <style>
     .guitar-image {
-        margin-left: 50px;
+        margin-left: 500px;
+        margin-top: -200px;
+        margin-bottom: -200px;
         transform: rotate(90deg);
-        height: 500px;
+        height: 700px;
+        z-index: -1000;
         
         /* border: 2px solid #ccc;
         border-radius: 8px;
@@ -72,7 +75,7 @@
     <a class="btn btn-success" id="placeOrderButton">Place Order</a>
 
     <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
-    @if (Model.Name == "C40")
+    @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" asp-route-id="@Model?.Name" class="btn btn-outline-secondary">Edit</a>
     }
