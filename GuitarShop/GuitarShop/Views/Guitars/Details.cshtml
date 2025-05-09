@@ -1,5 +1,5 @@
 ﻿@model GuitarShop.Models.Guitar
-
+@Html.AntiForgeryToken()
 @{
     ViewData["Title"] = "Details";
 }
@@ -172,6 +172,7 @@
 
     const addToCartButton = document.getElementById('addToCartButton');
 
+
     openButton.addEventListener('click', e => {
         cartAmount.value='1';
         overlay.style.display = 'flex';
@@ -194,6 +195,6 @@
     });
 
     goToCartButton.addEventListener('click', e => {
-        window.location.href = `/Guitars/Edit/@Model?.Name`;
+        window.location.href = `/Cart`;
     });
 </script>

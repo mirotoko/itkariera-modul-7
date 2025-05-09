@@ -18,5 +18,6 @@ namespace GuitarShop.Data
         public DbSet<GuitarShop.Models.Shop> Shop { get; set; } = default!;
         public DbSet<GuitarShop.Models.Purchase> Purchase { get; set; } = default!;
         public DbSet<GuitarShop.Models.Courier> Courier { get; set; } = default!;
+        public DbSet<GuitarShop.Models.Cart> Carts { get; set; } = default!;
     }
 }
