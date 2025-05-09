@@ -92,9 +92,6 @@
         pointer-events: none;
         z-index: 9999;
         max-width: 150px;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     tr.hover-target:hover {
@@ -103,7 +100,7 @@
     }
 </style>
 
-<img id="hoverImage" alt="goo goo gaga ne raboti" class="hover-image" />
+<img id="hoverImage" alt="TEDO OPRAVI GO!!!" class="hover-image" />
 
 <script>
     const inputBox = document.getElementById("inputBox");
@@ -119,15 +116,8 @@
 
         row.addEventListener("mousemove", e => {
             const guitar = row.getAttribute("data-display-image"); // izpolzva Guitar.Name
-
-            if (guitar == "C40")
-            {
-                hoverImage.src = "https://media.discordapp.net/attachments/908707119488962591/1369389613155880980/misho.jpg?ex=681baef5&is=681a5d75&hm=0e5d7a284e1861419a9d70d4f2e49d2547a6507f207a6a05b463ebce0ed603fb&=&format=webp&width=488&height=575";
-            }
-            else
-            {
-                hoverImage.src = "https://media.discordapp.net/attachments/908707119488962591/1369391266885926942/miro_kavrukov.jpg?ex=681bb080&is=681a5f00&hm=2f65accef72ea8185f78a0c3c4b5eebd76e22c0b0cc73e06b80cdbd166d3ff55&=&format=webp&width=259&height=575";
-            }
+            
+            hoverImage.src=`/images/GuitarsPicturesPNGs/${guitar}.png`;
 
             hoverImage.style.display = "block";
             hoverImage.style.top = `${e.clientY + 15}px`;
@@ -186,7 +176,7 @@ else{
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 rounded-4 p-3 hover-target" data-display-image="@item.Name" style="cursor: pointer;">
                             <div class="card-body text-center">
-                                <img id="guitarImage" alt="@item.Name" class="guitar-image" src="https://media.discordapp.net/attachments/908707119488962591/1369391266885926942/miro_kavrukov.jpg?ex=681bb080&is=681a5f00&hm=2f65accef72ea8185f78a0c3c4b5eebd76e22c0b0cc73e06b80cdbd166d3ff55&=&format=webp&width=259&height=575" />
+                                <img id="guitarImage" alt=@item.Name class="guitar-image" src="@($"/images/GuitarsPicturesPNGs/{item.Name}.png")" />
                                 <h5 class="card-title">@item.Name</h5>
                                 <p class="card-text fw-bold">@item.Price$</p>
                                 <p class="interest-label" style="color:@interestColor">@interestLabel</p>
@@ -204,11 +194,7 @@ else{
             }
 
             .guitar-image {
-                height: 300px;
-                max-width: 500px;
-                border: 2px solid #ccc;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                height: 500px;
             }
         </style>
 

@@ -63,7 +63,7 @@ namespace GuitarShop.Models
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Epiphone", Name = "Les Paul Standard 60s Ebony", Price = 563, Availability = 19, Interest = 3 },
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul SIGNATURE Slash Standard NB", Price = 2789, Availability = 4, Interest = 2 },
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Standard 60s BB", Price = 2499, Availability = 9, Interest = 2 },
-                    new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Standard 50s HCS", Price = 2499, Availability = 8, Interest = 2 },
+                    new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Standard 50s HCSs", Price = 2499, Availability = 8, Interest = 2 },
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Modern Figured CB", Price = 2899, Availability = 6, Interest = 2 },
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Standard 50s GT", Price = 2539, Availability = 4, Interest = 1 },
                     new Guitar { Type = "Electric", Body = "Single Cut", Brand = "Gibson", Name = "Les Paul Studio BlueberryBurst", Price = 1789, Availability = 2, Interest = 4 },
