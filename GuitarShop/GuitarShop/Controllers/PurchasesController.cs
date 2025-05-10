@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GuitarShop.Data;
 using GuitarShop.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GuitarShop.Controllers
 {
@@ -23,6 +24,7 @@ namespace GuitarShop.Controllers
         }
 
         // GET: Purchases
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Purchase.ToListAsync());
