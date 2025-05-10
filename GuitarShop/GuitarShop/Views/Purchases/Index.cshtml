@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>@Model.ToList().Count</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,22 +14,89 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.DateTime)
+			</th>
+			<th>
+				kitara
+			</th>
+            <th>
+                ime
             </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+@foreach (var item in Model.Where(x=>x.IsProcessed==false).ToList()) {
+        <tr class="hover-target" data-id="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.DateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+				</td>
+				<td>@item.GuitarName</td>
+                <td>@item.UserId</td>
+                
         </tr>
 }
     </tbody>
 </table>
+
+<button id="count-button" class="btn">count button</button>
+<p id="result"></p>
+
+<script>
+    document.querySelectorAll("tr.hover-target").forEach(row => {
+        row.addEventListener('click', e => {
+            row.style.backgroundColor = 'green';
+        });
+        row.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            row.style.backgroundColor = 'red';
+        });
+    });
+</script>
+
+<script>
+    const countButton = document.getElementById('count-button');
+
+    countButton.addEventListener('click', e => {
+        const acceptedIds = [];
+        const declinedIds = [];
+
+        const rows = document.querySelectorAll("tr");
+
+        rows.forEach(row => {
+            const bgColor = row.style.backgroundColor;
+            if (bgColor == 'green') 
+            {
+                acceptedIds.push(row.dataset.id);
+            } 
+            else if (bgColor == 'red') 
+            {
+                declinedIds.push(row.dataset.id);
+            }
+        });
+
+        document.getElementById("result").textContent = acceptedIds + declinedIds;
+
+        const data = {
+        acceptedIds: acceptedIds,
+        declinedIds: declinedIds,
+    };
+
+        fetch('/Purchases/ProcessPurchases', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+                return response.text();
+            }
+            throw new Error("Request failed");
+        })
+        .then(result => console.log("Success:", result))
+        .catch(err => console.error(err)); 
+    });
+</script>

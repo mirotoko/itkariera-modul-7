@@ -39,6 +39,7 @@ namespace GuitarShop.Controllers
         public async Task<IActionResult> Purchase()
         {
             var user = await _userManager.GetUserAsync(User);
+
             var purchases = (from g in _context.Purchase
                               select g).ToList();
             var guitars = (from g in _context.Guitar
@@ -46,11 +47,12 @@ namespace GuitarShop.Controllers
 
             foreach (var guitarName in user.Cart)
             {
-                var guitar = guitars.FirstOrDefault(x => x.Name.Contains(guitarName));
-                var purchase = new Purchase(guitar, user);
+                var purchase = new Purchase(guitarName, user.Id);
                 _context.Purchase.Add(purchase);
             }
             user.Cart.Clear();
+
+            await _userManager.UpdateAsync(user);
 
             await _context.SaveChangesAsync();
 

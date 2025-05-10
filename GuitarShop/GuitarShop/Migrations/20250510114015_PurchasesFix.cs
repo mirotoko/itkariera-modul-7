@@ -1,28 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace GuitarShop.Migrations
 {
     /// <inheritdoc />
-    public partial class PurchasesCreate : Migration
+    public partial class PurchasesFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-/*            migrationBuilder.DropTable(
-                name: "Purchase");
-
-
-            migrationBuilder.DropTable(
-                name: "User");*/
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -84,6 +71,13 @@ namespace GuitarShop.Migrations
                 name: "IX_Purchase_UserId",
                 table: "Purchase",
                 column: "UserId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuitarShop.Data;
 using GuitarShop.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace GuitarShop.Controllers
 {
     public class PurchasesController : Controller
     {
         private readonly GuitarShopContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public PurchasesController(GuitarShopContext context)
+        public PurchasesController(GuitarShopContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Purchases
@@ -152,6 +155,46 @@ namespace GuitarShop.Controllers
         private bool PurchaseExists(int id)
         {
             return _context.Purchase.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProcessPurchases([FromBody] GuitarColorData data)
+        {
+            var guitars = from g in _context.Guitar
+                          select g;
+            var purchases = from g in _context.Purchase
+                          select g;
+
+            var AcceptedIds = data.AcceptedIds;
+            var DeclinedIds = data.DeclinedIds;
+
+            foreach (var id in AcceptedIds)
+            {
+                var purchase = purchases.FirstOrDefault(x => x.Id == id);
+
+                purchase.IsProcessed = true;
+                purchase.IsAccepted = true;
+
+                guitars.FirstOrDefault(x => x.Name == purchase.GuitarName).Availability--;
+                _context.SaveChanges();
+            }
+
+            foreach (var id in DeclinedIds)
+            {
+                var purchase = purchases.FirstOrDefault(x => x.Id == id);
+
+                purchase.IsProcessed = true;
+
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
+
+        public class GuitarColorData
+        {
+            public List<int> AcceptedIds { get; set; }
+            public List<int> DeclinedIds { get; set; }
         }
     }
 }

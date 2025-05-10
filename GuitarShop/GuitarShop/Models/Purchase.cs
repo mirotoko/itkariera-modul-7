@@ -6,15 +6,20 @@ namespace GuitarShop.Models
     {
         [Key]
         public int Id { get; set; }
-        public Guitar? Guitar { get; set; }
-        public User? User { get; set; }
+        public string? GuitarName { get; set; }
+        public string? UserId { get; set; }
         public DateTime DateTime { get; set; }
 
-        public Purchase(Guitar? guitar, User? user)
+        public bool IsProcessed {  get; set; }
+        public bool IsAccepted { get; set; }
+
+        public Purchase(string guitarName, string userId)
         {
-            Guitar = guitar;
-            User = user;
             DateTime = DateTime.Now;
+            GuitarName = guitarName;
+            UserId = userId;
+            IsProcessed = false;
+            IsAccepted = false;
         }
         public Purchase() { }
     }
