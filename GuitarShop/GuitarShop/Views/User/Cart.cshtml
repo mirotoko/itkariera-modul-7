@@ -1,15 +1,86 @@
 ﻿@model List<Guitar>
 
-@if (Model != null)
+<h1>Your cart</h1>
+
+@if (Model != null && Model.Count > 0)
 {
-    <p>@Model.Count</p>
-    foreach (var guitar in Model)
-    {
-        <p>@guitar.Name</p>
-        <p>@guitar.Brand</p>
-    }
+    <div class="container mt-5">
+        <table class="table table-hover table-bordered shadow-sm rounded">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Type)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Body)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Brand)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    decimal totalPrice = 0;
+                    foreach (var item in Model.Distinct().ToList())
+                    {
+                        int count = Model.Count(x => x.Name == item.Name);
+                        int price = item.Price * count;
+
+                        <tr class="hover-target" data-display-image="@item.Name">
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                            <td>@(price)$</td>
+                            <td>@count</td>
+                        </tr>
+                        totalPrice += price;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="float:right">
+        <h3>Total price: @totalPrice$</h3>
+        <a asp-action="Purchase" class="btn btn-success" style="float:right">Purchase</a>
+    </div>
+   
 }
 else
 {
     <p>Your cart is empty.</p>
 }
+
+<style>
+    .hover-image {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        max-width: 150px;
+    }
+</style>
+
+<img id="hoverImage" alt="TEDO OPRAVI GO!!!" class="hover-image" />
+
+<script>
+    const hoverImage = document.getElementById("hoverImage");
+
+    document.querySelectorAll("tr.hover-target").forEach(row => {
+
+        row.addEventListener("mousemove", e => {
+            const guitar = row.getAttribute("data-display-image"); // izpolzva Guitar.Name
+
+            hoverImage.src=`/images/GuitarsPicturesPNGs/${guitar}.png`;
+
+            hoverImage.style.display = "block";
+            hoverImage.style.top = `${e.clientY + 15}px`;
+            hoverImage.style.left = `${e.clientX + 15}px`;
+        });
+
+        row.addEventListener("mouseleave", () => {
+            hoverImage.style.display = "none";
+        });
+
+    });
+</script>

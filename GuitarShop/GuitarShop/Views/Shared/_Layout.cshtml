@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (User.IsInRole("Admin"))
+                        @if (!User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Guitars" asp-action="Index">Guitars</a>
@@ -36,13 +36,16 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Shops" asp-action="Index">Shops</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Purchases" asp-action="Index">Purchases</a>
+                            </li>
                         }
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item d-flex align-items-center">
-                            <a class="nav-link p-0" asp-area="" asp-controller="Cart" asp-action="Index">
-                                <img src="~/images/cart.jpg" alt="Cart" style="height: 48px; margin-right: 20px"/>
+                            <a class="nav-link p-0">
+                                <img id="cartIcon" src="~/images/cart.jpg" alt="Cart" style="height: 48px; margin-right: 20px"/>
                             </a>
                             <span class="me-2 text-dark">
                                 @User.Identity?.Name
@@ -67,3 +70,15 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    #cartIcon:hover{
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.getElementById("cartIcon").addEventListener('click', e => {
+        window.location.href = `/User/Cart`;
+    });
+</script>

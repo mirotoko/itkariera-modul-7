@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GuitarShop.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace GuitarShop.Controllers
 {
@@ -33,6 +34,27 @@ namespace GuitarShop.Controllers
             }
 
             return View(guitars);
+        }
+
+        public async Task<IActionResult> Purchase()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var purchases = (from g in _context.Purchase
+                              select g).ToList();
+            var guitars = (from g in _context.Guitar
+                              select g).ToList();
+
+            foreach (var guitarName in user.Cart)
+            {
+                var guitar = guitars.FirstOrDefault(x => x.Name.Contains(guitarName));
+                var purchase = new Purchase(guitar, user);
+                _context.Purchase.Add(purchase);
+            }
+            user.Cart.Clear();
+
+            await _context.SaveChangesAsync();
+
+            return View();
         }
     }
 }

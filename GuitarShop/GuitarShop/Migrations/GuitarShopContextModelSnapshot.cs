@@ -94,20 +94,20 @@ namespace GuitarShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("GuitarName")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserIDId")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GuitarName");
 
-                    b.HasIndex("UserIDId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Purchase");
                 });
@@ -211,13 +211,13 @@ namespace GuitarShop.Migrations
                         .WithMany()
                         .HasForeignKey("GuitarName");
 
-                    b.HasOne("GuitarShop.Models.User", "UserID")
+                    b.HasOne("GuitarShop.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserIDId");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Guitar");
 
-                    b.Navigation("UserID");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
