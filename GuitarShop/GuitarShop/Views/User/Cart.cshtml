@@ -31,6 +31,7 @@
                             <td>@Html.DisplayFor(modelItem => item.Brand)</td>
                             <td>@(price)$</td>
                             <td>@count</td>
+                            
                         </tr>
                         totalPrice += price;
                     }
@@ -42,7 +43,6 @@
         <h3>Total price: @totalPrice$</h3>
         <a asp-action="Purchase" class="btn btn-success" style="float:right">Purchase</a>
     </div>
-   
 }
 else
 {
