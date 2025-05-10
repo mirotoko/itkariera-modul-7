@@ -58,5 +58,13 @@ namespace GuitarShop.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> EmptyCart()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            user.Cart.Clear();
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction(nameof(Cart));
+        }
     }
 }
