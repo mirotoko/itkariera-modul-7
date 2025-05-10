@@ -173,21 +173,28 @@ namespace GuitarShop.Controllers
             return _context.Guitar.Any(e => e.Name == id);
         }
 
-        public async Task<IActionResult> AddToCart(string guitarName)
+        [HttpPost]
+        public async Task<IActionResult> AddToCart([FromBody] AddToCartData data)
         {
+            var count = data.Count;
+            var guitarName = data.GuitarName;
+
             var user = await _userManager.GetUserAsync(User);
 
-            /*for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 user.Cart.Add(guitarName);
-            }     */
-            
-            user.Cart.Add(guitarName);
+            }     
 
             await _userManager.UpdateAsync(user);
 
-            return NoContent();
-            //return View();
+            return Ok($"{guitarName} {count}");
+        }
+
+        public class AddToCartData
+        {
+            public int Count { get; set; }
+            public string GuitarName { get; set; }
         }
     }
 }

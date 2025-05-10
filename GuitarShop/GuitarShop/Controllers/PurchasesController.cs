@@ -158,7 +158,7 @@ namespace GuitarShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProcessPurchases([FromBody] GuitarColorData data)
+        public async Task<IActionResult> ProcessPurchases([FromBody] ProcessPurchasesData data)
         {
             var guitars = from g in _context.Guitar
                           select g;
@@ -191,7 +191,7 @@ namespace GuitarShop.Controllers
             return Ok();
         }
 
-        public class GuitarColorData
+        public class ProcessPurchasesData
         {
             public List<int> AcceptedIds { get; set; }
             public List<int> DeclinedIds { get; set; }

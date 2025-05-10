@@ -3,53 +3,75 @@
 @{
     ViewData["Title"] = "Index";
 }
+@{
+    if (Model.Where(x => x.IsProcessed == false).ToList().Count > 0)
+    {
+        <table class="table table-bordered shadow-sm rounded">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateTime)
+                    </th>
+                    <th>
+                        Guitar
+                    </th>
+                    <th>
+                        UID
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.IsProcessed == false).ToList())
+                {
+                    <tr class="hover-target" data-id="@item.Id">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateTime)
+                        </td>
+                        <td>@item.GuitarName</td>
+                        <td>@item.UserId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTime)
-			</th>
-			<th>
-				kitara
-			</th>
-            <th>
-                ime
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Where(x=>x.IsProcessed==false).ToList()) {
-        <tr class="hover-target" data-id="@item.Id">
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
-				</td>
-				<td>@item.GuitarName</td>
-                <td>@item.UserId</td>
-                
-        </tr>
+        <button id="count-button" class="btn btn-success">Process orders</button>
+    }
+    else
+    {
+        <h2>No purchases left.</h2>
+    }
 }
-    </tbody>
-</table>
 
-<button id="count-button" class="btn">count button</button>
-<p id="result"></p>
+
+<style>
+    .hover-target:hover{
+        cursor:pointer;
+    }
+</style>
 
 <script>
     document.querySelectorAll("tr.hover-target").forEach(row => {
         row.addEventListener('click', e => {
-            row.style.backgroundColor = 'green';
+            e.preventDefault();
+            if (row.style.backgroundColor == 'green')
+            {
+                row.style.backgroundColor = 'white';
+            }
+            else
+            {
+                row.style.backgroundColor = 'green';
+            }
         });
         row.addEventListener('contextmenu', e => {
             e.preventDefault();
-            row.style.backgroundColor = 'red';
+            if (row.style.backgroundColor == 'red')
+            {
+                row.style.backgroundColor = 'white';
+            }
+            else
+            {
+                row.style.backgroundColor = 'red';
+            }
         });
     });
 </script>
@@ -74,8 +96,6 @@
                 declinedIds.push(row.dataset.id);
             }
         });
-
-        document.getElementById("result").textContent = acceptedIds + declinedIds;
 
         const data = {
         acceptedIds: acceptedIds,
