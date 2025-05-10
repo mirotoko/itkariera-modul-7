@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GuitarShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -68,12 +68,23 @@
 
 <style>
     #cartIcon:hover{
-        cursor: pointer;
+    cursor: pointer;
     }
 </style>
 
 <script>
     document.getElementById("cartIcon").addEventListener('click', e => {
+        const isUser = @((User.IsInRole("User")).ToString().ToLower());
+        const isAdmin = @((User.IsInRole("Admin")).ToString().ToLower());
+    if (isUser == false && isAdmin == false)
+    {
+        window.location.href = `/Account/Login`;
+    }
+    else
+    {
         window.location.href = `/User/Cart`;
+    }
+
+       
     });
 </script>
