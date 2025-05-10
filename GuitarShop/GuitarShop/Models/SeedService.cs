@@ -1,9 +1,8 @@
-﻿using GuitarShop.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using GuitarShop.Data;
 
-namespace GuitarShop.Services
+namespace GuitarShop.Models
 {
     // USER: guitaruser@gmail.com
     // PASS: User1234
@@ -15,7 +14,7 @@ namespace GuitarShop.Services
         public static async Task SeedDatabase(IServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<GuitarShopContext>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<SeedService>>();

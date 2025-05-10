@@ -54,11 +54,13 @@ namespace GuitarShop
             //  /\ BUGVA SAITA (NE ZNAM ZASHTO!)
 
             var app = builder.Build();
+            SeedService.SeedDatabase(app.Services);
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 SeedData.InitializeGuitars(services);
                 SeedData.InitializeShops(services);
+                
             }
 
             // Configure the HTTP request pipeline.
