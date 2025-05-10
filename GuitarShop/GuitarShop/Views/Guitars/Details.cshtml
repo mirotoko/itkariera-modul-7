@@ -231,6 +231,9 @@
     addToCartButton.addEventListener('click', e => {
         const count = document.getElementById("cartAmount").value;
         const guitarName = "@Model.Name";
+        const isUser = @((User.IsInRole("User")).ToString().ToLower());
+        const isAdmin = @((User.IsInRole("Admin")).ToString().ToLower());
+
         //fetch(`/AddToCart?guitarName=${encodeURIComponent(guitarName)}&count=${count}`);
         // ne iskam da gledam tozi kod poveche NE mi se zanimava
 
@@ -238,8 +241,13 @@
         count: count,
         guitarName: guitarName
     };
-
-        fetch('/Guitars/AddToCart', {
+        if (isUser == false && isAdmin == false)
+        {
+            window.location.href = `/Account/Login`;
+        }
+        else
+        {
+            fetch('/Guitars/AddToCart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -257,6 +265,8 @@
 
         overlay.style.display = 'none';
         overlaySuccess.style.display = 'flex';
+        }
+        
     });
 
     goToCartButton.addEventListener('click', e => {
