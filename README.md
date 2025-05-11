@@ -1,7 +1,8 @@
 TUTORIAL HOW TO USE
 
 0. NuGet Packages Console: Update-Database -Context ApplicationDBContext
-                           Update-Database -Context GuitarShopContext
+                           
+Update-Database -Context GuitarShopContext
 
 1. Насочете се горе дясно, направете си профил.
 2. Върнете се в Home.
