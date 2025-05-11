@@ -42,17 +42,6 @@ namespace GuitarShop
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
 
-            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-
-            //        builder.Services.AddIdentity<Users, IdentityRole>()
-            //.AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddDefaultTokenProviders();
-
-            //  /\ BUGVA SAITA (NE ZNAM ZASHTO!)
-
             var app = builder.Build();
             SeedService.SeedDatabase(app.Services);
             using (var scope = app.Services.CreateScope())

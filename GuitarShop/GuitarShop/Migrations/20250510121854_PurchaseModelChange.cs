@@ -11,25 +11,6 @@ namespace GuitarShop.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Purchase_Guitar_GuitarName",
-                table: "Purchase");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Purchase_User_UserId",
-                table: "Purchase");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Purchase_GuitarName",
-                table: "Purchase");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Purchase_UserId",
-                table: "Purchase");
-
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "Purchase",
@@ -70,7 +51,7 @@ namespace GuitarShop.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
-            migrationBuilder.CreateTable(
+            /*migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -95,7 +76,7 @@ namespace GuitarShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
+                });*/
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchase_GuitarName",

@@ -2,13 +2,8 @@
 using System;
 using GuitarShop.Data;
 
-namespace GuitarShop.Models
-{
-    // USER: guitaruser@gmail.com
-    // PASS: User1234
-
-    // ADMIN: guitaradmin@guitarshop.com
-    // PASS: Admin123!  
+namespace GuitarShop.Models 
+{ 
     public class SeedService
     {
         public static async Task SeedDatabase(IServiceProvider serviceProvider)

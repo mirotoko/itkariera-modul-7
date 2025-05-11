@@ -11,12 +11,7 @@ namespace GuitarShop.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-/*            migrationBuilder.DropTable(
-                name: "Purchase");
 
-
-            migrationBuilder.DropTable(
-                name: "User");*/
         }
 
         /// <inheritdoc />
