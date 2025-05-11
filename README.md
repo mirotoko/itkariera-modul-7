@@ -1,4 +1,5 @@
 TUTORIAL HOW TO USE
+
 0. NuGet Packages Console: Update-Database -Context ApplicationDBContext
                            Update-Database -Context GuitarShopContext
 
