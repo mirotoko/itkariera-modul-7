@@ -1,4 +1,7 @@
 TUTORIAL HOW TO USE
+0. NuGet Packages Console: Update-Database -Context ApplicationDBContext
+                           Update-Database -Context GuitarShopContext
+
 1. Насочете се горе дясно, направете си профил.
 2. Върнете се в Home.
 3. Изберете си вид китари, които да разглеждате.
